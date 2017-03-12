@@ -1,18 +1,15 @@
 #pragma once
 
 #include "Game.h"
-#include "SFML\Graphics.hpp"
 
 class GameState
 {
-private:
+public:
 	virtual void Input() = 0;
-	virtual void Update() = 0;
-	virtual void Draw(sf::RenderWindow& window) = 0;
+	virtual void Update(const float dt) = 0;
+	virtual void Draw(const float dt) = 0;
 
 	Game* game;
-	
-public:
 	
 	GameState(Game& gameAdress);
 };
