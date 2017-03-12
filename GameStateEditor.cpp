@@ -1,24 +1,16 @@
-#include "GameStateMainMenu.h"
-#include"GameStateEditor.h"
+#include "GameStateEditor.h"
 
-void GameStateMainMenu::LoadGame()
+void GameStateEditor::Draw(const float dt)
 {
-	this->game->PushState(new GameStateEditor(this->game));
-}
-
-void GameStateMainMenu::Draw(const float dt)
-{
-	this->game->window.setView(this->view);
-
 	this->game->window.clear(sf::Color::Black);
 	this->game->window.draw(this->game->background);
 }
 
-void GameStateMainMenu::Update(const float dt)
+void GameStateEditor::Update(const float dt)
 {
 }
 
-void GameStateMainMenu::Input()
+void GameStateEditor::Input()
 {
 	sf::Event event;
 
@@ -29,28 +21,31 @@ void GameStateMainMenu::Input()
 			this->game->window.close();
 			break;
 		case sf::Event::Resized:
-			this->view.setSize(event.size.width,event.size.height);
-			this->view.setCenter(event.size.width / 2, event.size.height / 2);
+			this->gameView.setSize(event.size.width, event.size.height);
+			this->gameView.setCenter(event.size.width / 2, event.size.height / 2);
+			this->guiView.setSize(event.size.width, event.size.height);
+			this->guiView.setCenter(event.size.width / 2, event.size.height / 2);
 
-			this->game->background.setPostition(this->game->window.mapPixelToCoord(sf::Vector2i(0, 0)),this->view);
+			this->game->background.setPostition(this->game->window.mapPixelToCoord(sf::Vector2i(0, 0), this->guiView));
 			this->game->background.setScale(
 				static_cast<float>(event.size.width) / static_cast<float>(this->game->background.getSize().x),
 				static_cast<float>(event.size.height) / static_cast<float>(this->game->background.getSize().y));
 			break;
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape) this->game->window.close;
-			if (event.key.code == sf::Keyboard::Space) this->LoadGame();
 			break;
 		default: break;
 		}
 	}
 }
 
-GameStateMainMenu::GameStateMainMenu(Game* gameAdress):
+GameStateEditor::GameStateEditor(Game* gameAdress) :
 	GameState(gameAdress)
 {
 	sf::Vector2f pos = sf::Vector2f(this->game->window.getSize());
-	this->view.setSize(pos);
+	this->gameView.setSize(pos);
+	this->guiView.setSize(pos);
 	pos *= 0.5f;
-	this->view.setCenter(pos);
+	this->gameView.setCenter(pos);
+	this->guiView.setCenter(pos);
 }

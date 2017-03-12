@@ -1,13 +1,11 @@
 #pragma once
 #include "GameState.h"
-
-class GameStateMainMenu :
+class GameStateEditor :
 	public GameState
 {
 private:
-	sf::View view;
-
-	void LoadGame();
+	sf::View gameView;
+	sf::View guiView;
 
 public:
 
@@ -15,5 +13,5 @@ public:
 	virtual void Update(const float dt);
 	virtual void Input();
 
-	GameStateMainMenu(Game* gameAdress);
+	GameStateEditor(Game* gameAdress);
 };

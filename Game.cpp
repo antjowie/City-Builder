@@ -15,7 +15,7 @@ void Game::PopState()
 void Game::SwitchState(GameState * state)
 {
 	if (!this->gamestates.empty()) PopState();
-	PushState(state);
+	this->PushState(state);
 	
 }
 
@@ -34,11 +34,11 @@ void Game::GameLoop()
 		float dt = clock.getElapsedTime().asSeconds();
 
 		if (PeekState() == nullptr) continue;
-		PeekState()->Input();
-		PeekState()->Update(dt);
+		this->PeekState()->Input();
+		this->PeekState()->Update(dt);
 		this->window.clear(sf::Color::Black);
-		PeekState()->Draw(dt);
-		window.display();
+		this->PeekState()->Draw(dt);
+		this->window.display();
 	}
 }
 
@@ -51,5 +51,5 @@ Game::Game()
 
 Game::~Game()
 {
-	while (!gamestates.empty()) PopState();
+	while (!gamestates.empty()) this->PopState();
 }
