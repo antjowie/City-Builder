@@ -1,28 +1,33 @@
 #include "Game.h"
 #include "GameState.h"
 
+void Game::LoadTextures()
+{
+	textureManager.LoadTexture("background", "media/background.png");
+}
+
 void Game::PushState(GameState * state)
 {
-	this->gamestates.push(state);
+	gamestates.push(state);
 }
 
 void Game::PopState()
 {
-	delete this->gamestates.top();
-	this->gamestates.pop;
+	delete gamestates.top();
+	gamestates.pop();
 }
 
 void Game::SwitchState(GameState * state)
 {
-	if (!this->gamestates.empty()) PopState();
-	this->PushState(state);
+	if (!gamestates.empty()) PopState();
+	PushState(state);
 	
 }
 
 GameState* Game::PeekState()
 {
-	if (this->gamestates.empty()) return nullptr;
-	return this->gamestates.top();
+	if (gamestates.empty()) return nullptr;
+	return gamestates.top();
 }
 
 void Game::GameLoop()
@@ -30,26 +35,29 @@ void Game::GameLoop()
 	sf::Clock clock;
 	float dt;
 
-	while (!this->window.isOpen()) {
-		float dt = clock.getElapsedTime().asSeconds();
+	while (window.isOpen()) {
+		dt = clock.getElapsedTime().asSeconds();
 
 		if (PeekState() == nullptr) continue;
-		this->PeekState()->Input();
-		this->PeekState()->Update(dt);
-		this->window.clear(sf::Color::Black);
-		this->PeekState()->Draw(dt);
-		this->window.display();
+		PeekState()->Input();
+		PeekState()->Update(dt);
+		window.clear(sf::Color::Black);
+		PeekState()->Draw(dt);
+		window.display();
 	}
 }
 
 Game::Game()
 {
-	this->window.create(sf::VideoMode(800, 600), "City Builder");
-	this->window.setFramerateLimit(60);
+	window.create(sf::VideoMode(800, 600), "City Builder");
+	window.setFramerateLimit(60);
+
+	LoadTextures();
+	background.setTexture(textureManager.GetTexture("background"));
 }
 
 
 Game::~Game()
 {
-	while (!gamestates.empty()) this->PopState();
+	while (!gamestates.empty()) PopState();
 }

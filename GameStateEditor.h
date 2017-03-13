@@ -1,5 +1,7 @@
 #pragma once
+
 #include "GameState.h"
+
 class GameStateEditor :
 	public GameState
 {
