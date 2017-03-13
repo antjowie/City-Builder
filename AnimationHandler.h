@@ -6,9 +6,14 @@ private:
 public:
 };
 
-class Animation
+struct Animation
 {
-private:
+	unsigned int startFrame;
+	unsigned int endFrame;
 
-public:
+	float duration;
+
+	unsigned int GetLength() const;
+
+	Animation(const unsigned int startFrame, const unsigned int endFrame, const float duration);
 };
