@@ -5,8 +5,3 @@
 Tile::Tile()
 {
 }
-
-
-Tile::~Tile()
-{
-}
