@@ -22,6 +22,8 @@ private:
 
 	float elapsed;
 
+	int currentAnim;
+
 public:
 	// Selection of the texture that should be displayed
 	sf::IntRect bounds;
