@@ -39,7 +39,7 @@ void GameStateMainMenu::Input()
 			break;
 		case sf::Event::KeyPressed:
 			if (event.key.code == sf::Keyboard::Escape) game->window.close();
-			if (event.key.code == sf::Keyboard::Space) LoadGame();
+			else if (event.key.code == sf::Keyboard::Space) LoadGame();
 			break;
 		default: break;
 		}
